@@ -7,6 +7,14 @@
   <body>
     <h1>Ajouter une entreprise</h1>
     <form action="/nouvelle-entreprise" method="POST">
+      {% if result and not result["is_valid"] %}
+      <div>
+        <p>Une erreur s'est produite lors du traitement de votre requête.</p>
+        {% for each in result["global_errors"] %}
+          <p style="color:red">{{ each }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
       <div>
         <label for="entreprise-nom">Nom de l'entreprise : </label>
         <input type="text" id="entreprise-nom" name="nom">

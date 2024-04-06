@@ -53,10 +53,25 @@ def entreprise_add():
     if request.method == "GET":
         return render_template('entreprise-edit.html')
     else:
-        #TODO Faire la validation
-        get_db().add_entreprise(request.form["nom"])
-        return redirect('/entreprises')
+        validation_result = validate_entreprise(request.form)
+        if validation_result["is_valid"]:
+            get_db().add_entreprise(request.form["nom"])
+            return redirect('/entreprises')
+        else:
+            return render_template('entreprise-edit.html', result=validation_result)
 
 
 def sort_entreprises(properties):
     return properties["nom"]
+
+
+def validate_entreprise(entreprise):
+    result = {}
+    result["is_valid"] = True
+    result["global_errors"] = []
+    
+    if "nom" not in entreprise or len(entreprise["nom"]) == 0:
+        result["is_valid"] = False
+        result["global_errors"].append("Le nom d'entreprise est obligatoire.")
+
+    return result
