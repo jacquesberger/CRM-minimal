@@ -15,6 +15,7 @@
 from flask import Flask
 from flask import redirect
 from flask import render_template
+from flask import request
 from flask import g
 from .database import Database
 
@@ -44,3 +45,13 @@ def landing_page():
 def entreprises_liste():
     all_entreprises = get_db().get_entreprises()
     return render_template('entreprises.html', entreprises=all_entreprises)
+
+
+@app.route('/nouvelle-entreprise', methods=["GET", "POST"])
+def entreprise_add():
+    if request.method == "GET":
+        return render_template('entreprise-edit.html')
+    else:
+        #TODO Faire la validation
+        get_db().add_entreprise(request.form["nom"])
+        return redirect('/entreprises')

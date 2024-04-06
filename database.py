@@ -53,12 +53,12 @@ class Database:
         #  else:
             #  return _build_entreprise(item)
 
-    #  def add_entreprise(self, nom):
-        #  connection = self.get_connection()
-        #  query = ("insert into entreprise(nom) values(?)")
-        #  connection.execute(query, (nom,))
-        #  cursor = connection.cursor()
-        #  cursor.execute("select last_insert_rowid()")
-        #  lastId = cursor.fetchone()[0]
-        #  connection.commit()
-        #  return lastId
+    def add_entreprise(self, nom):
+        connection = self.get_connection()
+        query = ("insert into entreprise(nom) values(?)")
+        connection.execute(query, (nom,))
+        cursor = connection.cursor()
+        cursor.execute("select last_insert_rowid()")
+        lastId = cursor.fetchone()[0]
+        connection.commit()
+        return lastId
