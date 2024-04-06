@@ -44,6 +44,7 @@ def landing_page():
 @app.route('/entreprises')
 def entreprises_liste():
     all_entreprises = get_db().get_entreprises()
+    all_entreprises.sort(key=sort_entreprises)
     return render_template('entreprises.html', entreprises=all_entreprises)
 
 
@@ -55,3 +56,7 @@ def entreprise_add():
         #TODO Faire la validation
         get_db().add_entreprise(request.form["nom"])
         return redirect('/entreprises')
+
+
+def sort_entreprises(properties):
+    return properties["nom"]
