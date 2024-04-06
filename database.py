@@ -36,12 +36,12 @@ class Database:
         if self.connection is not None:
             self.connection.close()
 
-    #  def get_entreprises(self):
-        #  cursor = self.get_connection().cursor()
-        #  query = ("select id, nom from entreprise")
-        #  cursor.execute(query)
-        #  all_data = cursor.fetchall()
-        #  return [_build_entreprise(item) for item in all_data]
+    def get_entreprises(self):
+        cursor = self.get_connection().cursor()
+        query = ("select id, nom from entreprise")
+        cursor.execute(query)
+        all_data = cursor.fetchall()
+        return [_build_entreprise(item) for item in all_data]
 
     #  def get_entreprise(self, entreprise_id):
         #  cursor = self.get_connection().cursor()

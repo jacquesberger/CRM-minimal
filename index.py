@@ -42,4 +42,5 @@ def landing_page():
 
 @app.route('/entreprises')
 def entreprises_liste():
-    return render_template('entreprises.html')
+    all_entreprises = get_db().get_entreprises()
+    return render_template('entreprises.html', entreprises=all_entreprises)

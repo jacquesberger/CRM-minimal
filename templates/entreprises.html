@@ -5,6 +5,15 @@
     <meta charset="utf-8">
   </head>
   <body>
-
+    <h1>Liste des entreprises</h1>
+    {% if entreprises %}
+      <ul>
+        {% for each in entreprises %}
+          <li>{{ each.nom }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Aucune entreprise pour le moment...</p>
+    {% endif %}
   </body>
 </html>
