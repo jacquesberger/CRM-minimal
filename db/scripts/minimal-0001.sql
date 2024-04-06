@@ -10,3 +10,12 @@ create table interaction (
   entreprise_id integer,
   foreign key(entreprise_id) references entreprise(id)
 );
+
+create table rappel (
+  id integer primary key,
+  done integer,
+  activation date,
+  note varchar,
+  entreprise_id integer,
+  foreign key(entreprise_id) references entreprise(id)
+);
