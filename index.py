@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from flask import Flask
+from flask import redirect
 from flask import render_template
 from flask import g
 from .database import Database
@@ -35,6 +36,10 @@ def close_connection(exception):
 
 
 @app.route('/')
-def form():
-    # À remplacer par le contenu de votre choix.
-    return render_template('form.html')
+def landing_page():
+    return redirect('/entreprises')
+
+
+@app.route('/entreprises')
+def entreprises_liste():
+    return render_template('entreprises.html')
