@@ -13,10 +13,11 @@
 # limitations under the License.
 
 from flask import Flask
+from flask import abort
+from flask import g
 from flask import redirect
 from flask import render_template
 from flask import request
-from flask import g
 from .database import Database
 
 app = Flask(__name__, static_url_path="", static_folder="static")
@@ -59,6 +60,15 @@ def entreprise_add():
             return redirect('/entreprises')
         else:
             return render_template('entreprise-edit.html', result=validation_result)
+
+
+@app.route('/entreprise/<id>')
+def entreprise_display(id):
+    entreprise = get_db().get_entreprise(id)
+    if entreprise is None:
+        abort(404)
+    else:
+        return render_template('entreprise-display.html', entreprise=entreprise)
 
 
 def sort_entreprises(properties):

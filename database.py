@@ -43,15 +43,15 @@ class Database:
         all_data = cursor.fetchall()
         return [_build_entreprise(item) for item in all_data]
 
-    #  def get_entreprise(self, entreprise_id):
-        #  cursor = self.get_connection().cursor()
-        #  query = ("select id, nom from entreprise where id = ?")
-        #  cursor.execute(query, (entreprise_id,))
-        #  item = cursor.fetchone()
-        #  if item is None:
-            #  return item
-        #  else:
-            #  return _build_entreprise(item)
+    def get_entreprise(self, entreprise_id):
+        cursor = self.get_connection().cursor()
+        query = ("select id, nom from entreprise where id = ?")
+        cursor.execute(query, (entreprise_id,))
+        item = cursor.fetchone()
+        if item is None:
+            return item
+        else:
+            return _build_entreprise(item)
 
     def add_entreprise(self, nom):
         connection = self.get_connection()

@@ -12,7 +12,7 @@
     {% if entreprises %}
       <ul>
         {% for each in entreprises %}
-          <li>{{ each.nom }}</li>
+          <li><a href="/entreprise/{{ each.id }}">{{ each.nom }}</a></li>
         {% endfor %}
       </ul>
     {% else %}
