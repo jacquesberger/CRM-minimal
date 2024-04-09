@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Rappel - CRM minimal</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h2>Ajouter un rappel pour l'entreprise {{ entreprise.nom }}</h2>
+    <div>
+      <form action="/entreprise/{{ entreprise.id }}/nouveau-rappel" method="post">
+        {% if result and not result["is_valid"] %}
+        <div>
+          <p>Une erreur s'est produite lors du traitement de votre requête.</p>
+          {% for each in result["global_errors"] %}
+            <p style="color:red">{{ each }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div>
+          <label for="rappel-date">Date de l'activation : </label>
+          <input type="date" id="rappel-date" name="activation">
+        </div>
+        <div>
+          <label for="rappel-note">Note : </label>
+          <input type="text" id="interaction-description" name="note">
+        </div>
+        <input type="hidden" name="entreprise_id" value="{{ entreprise.id }}">
+        <div>
+          <a href="/entreprise/{{ entreprise.id }}">Annuler</a>
+          <input type="submit" value="Ajouter le rappel">
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

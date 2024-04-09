@@ -70,7 +70,8 @@ def entreprise_display(id):
         abort(404)
     else:
         interactions = get_db().get_interactions(entreprise["id"])
-        return render_template('entreprise-display.html', entreprise=entreprise, interactions=interactions)
+        rappels = get_db().get_rappels_non_termines(entreprise["id"])
+        return render_template('entreprise-display.html', entreprise=entreprise, interactions=interactions, rappels=rappels)
 
 
 @app.route('/entreprise/<entreprise_id>/nouvelle-interaction', methods=["GET", "POST"])
@@ -88,6 +89,23 @@ def interaction_add(entreprise_id):
                 return redirect('/entreprise/' + str(entreprise["id"]))
             else:
                 return render_template('interaction-edit.html', entreprise=entreprise, result=validation_result)
+
+
+@app.route('/entreprise/<entreprise_id>/nouveau-rappel', methods=["GET", "POST"])
+def rappel_add(entreprise_id):
+    entreprise = get_db().get_entreprise(entreprise_id)
+    if entreprise is None:
+        abort(404)
+    else:
+        if request.method == "GET":
+            return render_template('rappel-edit.html', entreprise=entreprise)
+        else:
+            validation_result = validate_rappel(request.form, entreprise["id"])
+            if validation_result["is_valid"]:
+                get_db().add_rappel(datetime.date.fromisoformat(request.form["activation"]), request.form["note"], entreprise["id"])
+                return redirect('/entreprise/' + str(entreprise["id"]))
+            else:
+                return render_template('rappel-edit.html', entreprise=entreprise, result=validation_result)
 
 
 def sort_entreprises(properties):
@@ -124,6 +142,30 @@ def validate_interaction(interaction, entreprise_id):
         result["global_errors"].append("La description de l'interaction est obligatoire.")
 
     if "entreprise_id" not in interaction or interaction["entreprise_id"] != str(entreprise_id):
+        result["is_valid"] = False
+        result["global_errors"].append("Le lien avec l'entreprise a été compromis. Veuillez recharger la page et recommencer.")
+
+    return result
+
+
+def validate_rappel(rappel, entreprise_id):
+    result = {}
+    result["is_valid"] = True
+    result["global_errors"] = []
+
+    print(rappel["activation"])
+    if "activation" not in rappel or len(rappel["activation"]) == 0:
+        result["is_valid"] = False
+        result["global_errors"].append("La date de l'activation du rappel est obligatoire.")
+    elif not validate_isodate_format(rappel["activation"]):
+        result["is_valid"] = False
+        result["global_errors"].append("Le format de la date de l'activaition du rappel est incorrect.")
+
+    if "note" not in rappel or len(rappel["note"]) == 0:
+        result["is_valid"] = False
+        result["global_errors"].append("La note du rappel est obligatoire.")
+
+    if "entreprise_id" not in rappel or rappel["entreprise_id"] != str(entreprise_id):
         result["is_valid"] = False
         result["global_errors"].append("Le lien avec l'entreprise a été compromis. Veuillez recharger la page et recommencer.")
 

@@ -27,6 +27,34 @@
           <hr width="50%">
         {% endfor %}
       {% endif %}
+      <h2>Rappels</h2>
+      <div>
+        <a href="/entreprise/{{ entreprise.id }}/nouveau-rappel">Ajouter un rappel</a>
+      </div>
+      {% if not rappels %}
+        <div>
+          <p>Aucun rappel pour cette entreprise.</p>
+        </div>
+      {% else %}
+        <table>
+          <thead>
+            <tr>
+              <th>Activation</th>
+              <th>Note</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for each in rappels %}
+              <tr>
+                <td>{{ each.activation }}</td>
+                <td>{{ each.note }}</td>
+                <td>Terminé</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
     </div>
   </body>
 </html>

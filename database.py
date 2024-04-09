@@ -14,6 +14,7 @@
 
 
 import sqlite3
+import datetime
 
 
 def _build_entreprise(result_set_item):
@@ -28,6 +29,14 @@ def _build_interaction(result_set_item):
     interaction["moment"] = result_set_item[1]
     interaction["description"] = result_set_item[2]
     return interaction
+
+def _build_rappel(result_set_item):
+    rappel = {}
+    rappel["id"] = result_set_item[0]
+    rappel["activation"] = result_set_item[1]
+    rappel["note"] = result_set_item[2]
+    return rappel
+
 
 
 class Database:
@@ -86,3 +95,21 @@ class Database:
         lastId = cursor.fetchone()[0]
         connection.commit()
         return lastId
+    
+    def add_rappel(self, activation, note, entreprise_id):
+        connection = self.get_connection()
+        query = ("insert into rappel(done, activation, note, entreprise_id) values(0,?,?,?)")
+        connection.execute(query, (activation, note, entreprise_id,))
+        cursor = connection.cursor()
+        cursor.execute("select last_insert_rowid()")
+        lastId = cursor.fetchone()[0]
+        connection.commit()
+        return lastId
+    
+    def get_rappels_non_termines(self, entreprise_id):
+        cursor = self.get_connection().cursor()
+        query = ("select id, activation, note from rappel where entreprise_id = ? and done = 0")
+        cursor.execute(query, (entreprise_id,))
+        all_data = cursor.fetchall()
+        return [_build_rappel(item) for item in all_data]
+
