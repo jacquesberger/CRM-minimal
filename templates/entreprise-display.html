@@ -10,7 +10,23 @@
       <a href="/entreprises">Retour</a>
     </div>
     <div>
-      <a href="/entreprise/{{ entreprise.id }}/nouvelle-interaction">Ajouter une interaction</a>
+      <h2>Interactions</h2>
+      <div>
+        <a href="/entreprise/{{ entreprise.id }}/nouvelle-interaction">Ajouter une interaction</a>
+      </div>
+      {% if not interactions %}
+        <div>
+          <p>Aucune interaction avec cette entreprise.</p>
+        </div>
+      {% else %}
+        {% for each in interactions %}
+          <div>
+            <p>Interaction le {{ each.moment }}</p>
+            <p>{{ each.description }}</p>
+          </div>
+          <hr width="50%">
+        {% endfor %}
+      {% endif %}
     </div>
   </body>
 </html>

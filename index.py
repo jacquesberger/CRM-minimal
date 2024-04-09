@@ -69,7 +69,8 @@ def entreprise_display(id):
     if entreprise is None:
         abort(404)
     else:
-        return render_template('entreprise-display.html', entreprise=entreprise)
+        interactions = get_db().get_interactions(entreprise["id"])
+        return render_template('entreprise-display.html', entreprise=entreprise, interactions=interactions)
 
 
 @app.route('/entreprise/<entreprise_id>/nouvelle-interaction', methods=["GET", "POST"])

@@ -22,6 +22,13 @@ def _build_entreprise(result_set_item):
     entreprise["nom"] = result_set_item[1]
     return entreprise
 
+def _build_interaction(result_set_item):
+    interaction = {}
+    interaction["id"] = result_set_item[0]
+    interaction["moment"] = result_set_item[1]
+    interaction["description"] = result_set_item[2]
+    return interaction
+
 
 class Database:
     def __init__(self):
@@ -62,6 +69,13 @@ class Database:
         lastId = cursor.fetchone()[0]
         connection.commit()
         return lastId
+
+    def get_interactions(self, entreprise_id):
+        cursor = self.get_connection().cursor()
+        query = ("select id, moment, description from interaction where entreprise_id = ?")
+        cursor.execute(query, (entreprise_id,))
+        all_data = cursor.fetchall()
+        return [_build_interaction(item) for item in all_data]
 
     def add_interaction(self, moment, description, entreprise_id):
         connection = self.get_connection()
