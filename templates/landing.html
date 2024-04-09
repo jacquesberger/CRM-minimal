@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>CRM minimal</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>CRM minimal</h1>
+    <div>
+      <h2>À faire</h2>
+      {% if not rappels %}
+        <div>
+          <p>Rien à faire aujourd'hui!</p>
+        </div>
+      {% else %}
+        <table>
+          <thead>
+            <tr>
+              <th>Entreprise</th>
+              <th>Activation</th>
+              <th>Note</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for each in rappels %}
+              <tr>
+                <td>{{ each.nom_entreprise }}</td>
+                <td>{{ each.activation }}</td>
+                <td>{{ each.note }}</td>
+                <td>Terminer</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+    <div>
+      <a href="/entreprises">Liste des entreprises</a>
+    </div>
+  </body>
+</html>

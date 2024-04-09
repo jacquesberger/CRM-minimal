@@ -40,7 +40,8 @@ def close_connection(exception):
 
 @app.route('/')
 def landing_page():
-    return redirect('/entreprises')
+    rappels = get_db().get_rappels_todo()
+    return render_template('landing.html', rappels=rappels)
 
 
 @app.route('/entreprises')
