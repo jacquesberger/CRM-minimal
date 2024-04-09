@@ -19,16 +19,14 @@
               <th>Entreprise</th>
               <th>Activation</th>
               <th>Note</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
             {% for each in rappels %}
               <tr>
-                <td>{{ each.nom_entreprise }}</td>
+                <td><a href="/entreprise/{{ each.entreprise_id }}">{{ each.entreprise_nom }}</a></td>
                 <td>{{ each.activation }}</td>
                 <td>{{ each.note }}</td>
-                <td>Terminer</td>
               </tr>
             {% endfor %}
           </tbody>

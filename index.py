@@ -108,6 +108,15 @@ def rappel_add(entreprise_id):
             else:
                 return render_template('rappel-edit.html', entreprise=entreprise, result=validation_result)
 
+@app.route('/rappel/<rappel_id>')
+def retirer_rappel(rappel_id):
+    get_db().delete_rappel(rappel_id)
+    entreprise_id = request.args.get("entreprise")
+    if entreprise_id is None:
+        return redirect('/')
+    else:
+        return redirect('/entreprise/' + entreprise_id)
+    
 
 def sort_entreprises(properties):
     return properties["nom"]

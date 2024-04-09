@@ -49,7 +49,7 @@
               <tr>
                 <td>{{ each.activation }}</td>
                 <td>{{ each.note }}</td>
-                <td>Terminer</td>
+                <td><a href="/rappel/{{ each.id }}?entreprise={{ entreprise.id }}">Retirer</a></td>
               </tr>
             {% endfor %}
           </tbody>

@@ -42,11 +42,9 @@ def _build_rappel_todo(result_set_item):
     rappel["id"] = result_set_item[0]
     rappel["activation"] = result_set_item[1]
     rappel["note"] = result_set_item[2]
-    rappel["nom_entreprise"] = result_set_item[3]
+    rappel["entreprise_id"] = result_set_item[3]
+    rappel["entreprise_nom"] = result_set_item[4]
     return rappel
-
-
-
 
 
 class Database:
@@ -116,6 +114,12 @@ class Database:
         connection.commit()
         return lastId
     
+    def delete_rappel(self, rappel_id):
+        connection = self.get_connection()
+        query = ("delete from rappel where id = ?")
+        connection.execute(query, (rappel_id,))
+        connection.commit()
+    
     def get_rappels_non_termines(self, entreprise_id):
         cursor = self.get_connection().cursor()
         query = ("select id, activation, note from rappel where entreprise_id = ? and done = 0")
@@ -125,7 +129,7 @@ class Database:
 
     def get_rappels_todo(self):
         cursor = self.get_connection().cursor()
-        query = ("select rappel.id, rappel.activation, rappel.note, entreprise.nom from rappel inner join entreprise on (entreprise.id = rappel.entreprise_id) where rappel.done = 0 and rappel.activation <= ?")
+        query = ("select rappel.id, rappel.activation, rappel.note, entreprise.id, entreprise.nom from rappel inner join entreprise on (entreprise.id = rappel.entreprise_id) where rappel.done = 0 and rappel.activation <= ?")
         cursor.execute(query, (datetime.date.today(),))
         all_data = cursor.fetchall()
         return [_build_rappel_todo(item) for item in all_data]
