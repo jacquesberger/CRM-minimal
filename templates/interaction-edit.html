@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Interaction - CRM minimal</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h2>Ajouter une interaction pour l'entreprise {{ entreprise.nom }}</h2>
+    <div>
+      <form action="/entreprise/{{ entreprise.id }}/nouvelle-interaction" method="post">
+        {% if result and not result["is_valid"] %}
+        <div>
+          <p>Une erreur s'est produite lors du traitement de votre requête.</p>
+          {% for each in result["global_errors"] %}
+            <p style="color:red">{{ each }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div>
+          <label for="interaction-date">Date de l'interaction : </label>
+          <input type="date" id="interaction-date" name="moment">
+        </div>
+        <div>
+          <label for="interaction-description">Description : </label>
+          <textarea id="interaction-description" name="description"></textarea>
+        </div>
+        <input type="hidden" name="entreprise_id" value="{{ entreprise.id }}">
+        <div>
+          <a href="/entreprise/{{ entreprise.id }}">Annuler</a>
+          <input type="submit" value="Ajouter l'interaction">
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

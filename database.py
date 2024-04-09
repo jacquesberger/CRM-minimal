@@ -62,3 +62,13 @@ class Database:
         lastId = cursor.fetchone()[0]
         connection.commit()
         return lastId
+
+    def add_interaction(self, moment, description, entreprise_id):
+        connection = self.get_connection()
+        query = ("insert into interaction(moment, description, entreprise_id) values(?,?,?)")
+        connection.execute(query, (moment, description, entreprise_id,))
+        cursor = connection.cursor()
+        cursor.execute("select last_insert_rowid()")
+        lastId = cursor.fetchone()[0]
+        connection.commit()
+        return lastId

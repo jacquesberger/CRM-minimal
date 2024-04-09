@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 from flask import Flask
 from flask import abort
 from flask import g
@@ -71,6 +72,23 @@ def entreprise_display(id):
         return render_template('entreprise-display.html', entreprise=entreprise)
 
 
+@app.route('/entreprise/<entreprise_id>/nouvelle-interaction', methods=["GET", "POST"])
+def interaction_add(entreprise_id):
+    entreprise = get_db().get_entreprise(entreprise_id)
+    if entreprise is None:
+        abort(404)
+    else:
+        if request.method == "GET":
+            return render_template('interaction-edit.html', entreprise=entreprise)
+        else:
+            validation_result = validate_interaction(request.form, entreprise["id"])
+            if validation_result["is_valid"]:
+                get_db().add_interaction(datetime.date.fromisoformat(request.form["moment"]), request.form["description"], entreprise["id"])
+                return redirect('/entreprise/' + str(entreprise["id"]))
+            else:
+                return render_template('interaction-edit.html', entreprise=entreprise, result=validation_result)
+
+
 def sort_entreprises(properties):
     return properties["nom"]
 
@@ -85,3 +103,35 @@ def validate_entreprise(entreprise):
         result["global_errors"].append("Le nom d'entreprise est obligatoire.")
 
     return result
+
+
+def validate_interaction(interaction, entreprise_id):
+    result = {}
+    result["is_valid"] = True
+    result["global_errors"] = []
+
+    print(interaction["moment"])
+    if "moment" not in interaction or len(interaction["moment"]) == 0:
+        result["is_valid"] = False
+        result["global_errors"].append("La date de l'interaction est obligatoire.")
+    elif not validate_isodate_format(interaction["moment"]):
+        result["is_valid"] = False
+        result["global_errors"].append("Le format de la date de l'interaction est incorrect.")
+
+    if "description" not in interaction or len(interaction["description"]) == 0:
+        result["is_valid"] = False
+        result["global_errors"].append("La description de l'interaction est obligatoire.")
+
+    if "entreprise_id" not in interaction or interaction["entreprise_id"] != str(entreprise_id):
+        result["is_valid"] = False
+        result["global_errors"].append("Le lien avec l'entreprise a été compromis. Veuillez recharger la page et recommencer.")
+
+    return result
+
+
+def validate_isodate_format(string):
+    try:
+        datetime.date.fromisoformat(string)
+        return True
+    except:
+        return False

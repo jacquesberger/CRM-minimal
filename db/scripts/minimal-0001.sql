@@ -6,7 +6,7 @@ create table entreprise (
 create table interaction (
   id integer primary key,
   description varchar,
-  moment varchar,
+  moment date,
   entreprise_id integer,
   foreign key(entreprise_id) references entreprise(id)
 );
