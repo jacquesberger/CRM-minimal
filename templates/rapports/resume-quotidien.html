@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Résumé quotidien</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>Résumé quotidien pour le {{ date }}</h1>
+    {% if erreur %}
+      <p>Il faut choisir une date pour voir le rapport.</p>
+    {% else %}
+      {% for each in elements %}
+        <h3>{{ each.entreprise_nom }}</h3>
+        <p>{{ each.description }}</p>
+        <hr>
+      {% endfor %}
+    {% endif %}
+  </body>
+</html>

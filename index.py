@@ -116,7 +116,22 @@ def retirer_rappel(rappel_id):
         return redirect('/')
     else:
         return redirect('/entreprise/' + entreprise_id)
-    
+
+
+@app.route('/rapports')
+def page_rapports():
+    return render_template('rapports.html')
+
+
+@app.route('/resume-quotidien')
+def resume_quotidien():
+    date = request.args.get("date")
+    if date is "":
+        return render_template('rapports/resume-quotidien.html', erreur="Aucune date n'a été sélectionnée", date=date)
+    else:
+        elements = get_db().get_resume_quotidien(date)
+        return render_template('rapports/resume-quotidien.html', date=date, elements=elements)
+
 
 def sort_entreprises(properties):
     return properties["nom"]

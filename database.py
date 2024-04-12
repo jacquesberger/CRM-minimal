@@ -46,6 +46,13 @@ def _build_rappel_todo(result_set_item):
     rappel["entreprise_nom"] = result_set_item[4]
     return rappel
 
+def _build_resume_quotidien(result_set_item):
+    interaction = {}
+    interaction["description"] = result_set_item[0]
+    interaction["entreprise_nom"] = result_set_item[1]
+    return interaction
+
+
 
 class Database:
     def __init__(self):
@@ -133,3 +140,10 @@ class Database:
         cursor.execute(query, (datetime.date.today(),))
         all_data = cursor.fetchall()
         return [_build_rappel_todo(item) for item in all_data]
+
+    def get_resume_quotidien(self, date):
+        cursor = self.get_connection().cursor()
+        query = ("select interaction.description, entreprise.nom from interaction inner join entreprise on (interaction.entreprise_id = entreprise.id) where interaction.moment = ?")
+        cursor.execute(query, (date,))
+        all_data = cursor.fetchall()
+        return [_build_resume_quotidien(item) for item in all_data]
