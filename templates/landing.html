@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>CRM minimal</h1>
     <div>
       <h2>À faire</h2>
       {% if not rappels %}
@@ -8,7 +7,7 @@
           <p>Rien à faire aujourd'hui!</p>
         </div>
       {% else %}
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <th>Entreprise</th>

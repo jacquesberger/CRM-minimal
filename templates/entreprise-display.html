@@ -17,7 +17,7 @@
         {% for each in interactions %}
           <div>
             <p>Interaction le {{ each.moment }}</p>
-            <p>{{ each.description }}</p>
+            <pre class="interaction">{{ each.description }}</pre>
           </div>
           <hr width="50%">
         {% endfor %}
@@ -31,7 +31,7 @@
           <p>Aucun rappel pour cette entreprise.</p>
         </div>
       {% else %}
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <th>Activation</th>
