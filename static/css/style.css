@@ -2,6 +2,6 @@ nav.navbar {
   background-color: #e3f2fd;
 }
 
-pre.interaction {
-  font-family: var(--bs-body-font-family);
+p.interaction {
+  white-space: pre-wrap;
 }
