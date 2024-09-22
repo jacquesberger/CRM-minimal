@@ -96,7 +96,7 @@ class Database:
 
     def get_interactions(self, entreprise_id):
         cursor = self.get_connection().cursor()
-        query = ("select id, moment, description from interaction where entreprise_id = ?")
+        query = ("select id, moment, description from interaction where entreprise_id = ? order by moment")
         cursor.execute(query, (entreprise_id,))
         all_data = cursor.fetchall()
         return [_build_interaction(item) for item in all_data]
