@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>Rappel - CRM minimal</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+{% extends "layout.html" %}
+{% block content %}
     <h2>Ajouter un rappel pour l'entreprise {{ entreprise.nom }}</h2>
     <div>
       <form action="/entreprise/{{ entreprise.id }}/nouveau-rappel" method="post">
@@ -31,5 +26,4 @@
         </div>
       </form>
     </div>
-  </body>
-</html>
+{% endblock %}

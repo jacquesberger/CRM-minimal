@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>Ajouter une entreprise - CRM minimal</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+{% extends "layout.html" %}
+{% block content %}
     <h1>Ajouter une entreprise</h1>
     <form action="/nouvelle-entreprise" method="POST">
       {% if result and not result["is_valid"] %}
@@ -23,5 +18,4 @@
         <input type="submit" value="Ajouter">
       </div>
     </form>
-  </body>
-</html>
+{% endblock %}

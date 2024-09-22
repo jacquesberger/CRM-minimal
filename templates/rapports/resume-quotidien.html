@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>Résumé quotidien</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+{% extends "layout.html" %}
+{% block content %}
     <h1>Résumé quotidien pour le {{ date }}</h1>
     {% if erreur %}
       <p>Il faut choisir une date pour voir le rapport.</p>
@@ -15,5 +10,4 @@
         <hr>
       {% endfor %}
     {% endif %}
-  </body>
-</html>
+{% endblock %}

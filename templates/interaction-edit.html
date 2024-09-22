@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>Interaction - CRM minimal</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+{% extends "layout.html" %}
+{% block content %}
     <h2>Ajouter une interaction pour l'entreprise {{ entreprise.nom }}</h2>
     <div>
       <form action="/entreprise/{{ entreprise.id }}/nouvelle-interaction" method="post">
@@ -31,5 +26,4 @@
         </div>
       </form>
     </div>
-  </body>
-</html>
+{% endblock %}

@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>{{ entreprise.nom }} - CRM minimal</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+{% extends "layout.html" %}
+{% block content %}
     <h1>{{ entreprise.nom }}</h1>
     <div>
       <a href="/entreprises">Retour</a>
@@ -56,5 +51,4 @@
         </table>
       {% endif %}
     </div>
-  </body>
-</html>
+{% endblock %}
