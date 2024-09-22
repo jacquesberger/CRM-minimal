@@ -136,7 +136,7 @@ class Database:
 
     def get_rappels_todo(self):
         cursor = self.get_connection().cursor()
-        query = ("select rappel.id, rappel.activation, rappel.note, entreprise.id, entreprise.nom from rappel inner join entreprise on (entreprise.id = rappel.entreprise_id) where rappel.done = 0 and rappel.activation <= ?")
+        query = ("select rappel.id, rappel.activation, rappel.note, entreprise.id, entreprise.nom from rappel inner join entreprise on (entreprise.id = rappel.entreprise_id) where rappel.done = 0 and rappel.activation <= ? order by rappel.activation, entreprise.nom")
         cursor.execute(query, (datetime.date.today(),))
         all_data = cursor.fetchall()
         return [_build_rappel_todo(item) for item in all_data]
