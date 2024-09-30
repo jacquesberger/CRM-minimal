@@ -1,36 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div>
-      <h2>À faire</h2>
-      {% if not rappels %}
-        <div>
-          <p>Rien à faire aujourd'hui!</p>
-        </div>
-      {% else %}
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Entreprise</th>
-              <th>Activation</th>
-              <th>Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for each in rappels %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h2>À faire</h2>
+        {% if not rappels %}
+          <div>
+            <p>Rien à faire aujourd'hui!</p>
+          </div>
+        {% else %}
+          <table class="table">
+            <thead>
               <tr>
-                <td><a href="/entreprise/{{ each.entreprise_id }}">{{ each.entreprise_nom }}</a></td>
-                <td>{{ each.activation }}</td>
-                <td>{{ each.note }}</td>
+                <th>Entreprise</th>
+                <th>Activation</th>
+                <th>Note</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% endif %}
-    </div>
-    <div>
-      <a href="/entreprises">Liste des entreprises</a>
-    </div>
-    <div>
-      <a href="/rapports">Rapports</a>
+            </thead>
+            <tbody>
+              {% for each in rappels %}
+                <tr>
+                  <td><a href="/entreprise/{{ each.entreprise_id }}">{{ each.entreprise_nom }}</a></td>
+                  <td>{{ each.activation }}</td>
+                  <td>{{ each.note }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
     </div>
 {% endblock %}

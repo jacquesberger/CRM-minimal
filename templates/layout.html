@@ -9,9 +9,15 @@
   </head>
   <body>
     <div class="container-fluid">
-      <nav class="navbar">
+      <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">CRM minimal</a>
+          <div class="collapse navbar-collapse">
+            <div class="navbar-nav">
+              <a class="nav-link" href="/entreprises">Entreprises</a>
+              <a class="nav-link" href="/rapports">Rapports</a>
+            </div>
+          </div>
         </div>
       </nav>
       {% block content %}{% endblock %}
