@@ -5,3 +5,16 @@ nav.navbar {
 p.interaction {
   white-space: pre-wrap;
 }
+
+.below-subtitle {
+  margin-top: 2em;
+}
+
+h2.title-with-add {
+  display: inline;
+}
+
+a.beside-title {
+  margin-bottom: 1em;
+  margin-left: 0.5em;
+}

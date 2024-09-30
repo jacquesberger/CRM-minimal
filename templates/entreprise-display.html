@@ -1,13 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ entreprise.nom }}</h1>
-    <div>
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h1>{{ entreprise.nom }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-center">
       <a href="/entreprises">Retour</a>
     </div>
-    <div>
-      <h2>Interactions</h2>
+  </div>
+  <div class="row below-subtitle">
+    <div class="col-sm-7">
       <div>
-        <a href="/entreprise/{{ entreprise.id }}/nouvelle-interaction">Ajouter une interaction</a>
+        <h2 class="title-with-add">Interactions</h2>
+        <a class="btn btn-primary btn-sm beside-title" href="/entreprise/{{ entreprise.id }}/nouvelle-interaction">+</a>
       </div>
       {% if not interactions %}
         <div>
@@ -16,15 +23,23 @@
       {% else %}
         {% for each in interactions %}
           <div>
-            <p>Interaction le {{ each.moment }}</p>
+            <p>
+              <small>
+                <em>
+                  Interaction le <strong>{{ each.moment }}</strong>.
+                </em>
+              </small>
+            </p>
             <p class="interaction">{{ each.description }}</p>
           </div>
-          <hr width="50%">
+          <hr class="text-center">
         {% endfor %}
       {% endif %}
-      <h2>Rappels</h2>
+    </div>
+    <div class="col-sm-5">
       <div>
-        <a href="/entreprise/{{ entreprise.id }}/nouveau-rappel">Ajouter un rappel</a>
+        <h2 class="title-with-add">Rappels</h2>
+        <a class="btn btn-primary btn-sm beside-title" href="/entreprise/{{ entreprise.id }}/nouveau-rappel">+</a>
       </div>
       {% if not rappels %}
         <div>
@@ -51,4 +66,5 @@
         </table>
       {% endif %}
     </div>
+  </div>
 {% endblock %}
