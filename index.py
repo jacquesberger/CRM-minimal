@@ -133,6 +133,16 @@ def resume_quotidien():
         return render_template('rapports/resume-quotidien.html', date=date, elements=elements)
 
 
+@app.route('/resume-depuis')
+def resume_depuis_une_date():
+    date = request.args.get("date")
+    if date is "":
+        return render_template('rapports/resume-depuis.html', erreur="Aucune date n'a été sélectionnée", date=date)
+    else:
+        elements = get_db().get_resume_depuis(date)
+        return render_template('rapports/resume-depuis.html', date=date, elements=elements)
+
+
 def sort_entreprises(properties):
     return properties["nom"]
 

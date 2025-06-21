@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Résumé depuis le {{ date }}</h1>
+    {% if erreur %}
+      <p>Il faut choisir une date pour voir le rapport.</p>
+    {% else %}
+      {% for each in elements %}
+        <h3>
+          {{ each.entreprise_nom }}
+          <small class="text-body-secondary"> - {{ each.moment }}</small>
+        </h3>
+        <p>{{ each.description }}</p>
+        <hr>
+      {% endfor %}
+    {% endif %}
+{% endblock %}

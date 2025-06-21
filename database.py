@@ -52,6 +52,12 @@ def _build_resume_quotidien(result_set_item):
     interaction["entreprise_nom"] = result_set_item[1]
     return interaction
 
+def _build_resume_depuis(result_set_item):
+    interaction = {}
+    interaction["description"] = result_set_item[0]
+    interaction["moment"] = result_set_item[1]
+    interaction["entreprise_nom"] = result_set_item[2]
+    return interaction
 
 
 class Database:
@@ -147,3 +153,10 @@ class Database:
         cursor.execute(query, (date,))
         all_data = cursor.fetchall()
         return [_build_resume_quotidien(item) for item in all_data]
+
+    def get_resume_depuis(self, date):
+        cursor = self.get_connection().cursor()
+        query = ("select interaction.description, interaction.moment, entreprise.nom from interaction inner join entreprise on (interaction.entreprise_id = entreprise.id) where interaction.moment >= ?")
+        cursor.execute(query, (date,))
+        all_data = cursor.fetchall()
+        return [_build_resume_depuis(item) for item in all_data]
