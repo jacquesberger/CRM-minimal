@@ -58,8 +58,8 @@ def entreprise_add():
     else:
         validation_result = validate_entreprise(request.form)
         if validation_result["is_valid"]:
-            get_db().add_entreprise(request.form["nom"])
-            return redirect('/entreprises')
+            last_id = get_db().add_entreprise(request.form["nom"])
+            return redirect('/entreprise/' + str(last_id))
         else:
             return render_template('entreprise-edit.html', result=validation_result)
 
